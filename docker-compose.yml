@@ -1,19 +1,27 @@
 version: "3.7"
 
 services:
-  app:
-    container_name: docker-node-mongo
-    restart: always
-    build: .
-    ports:
-      - "80:3000"
-    volumes:
-      - type: bind
-        source: ./
-        target: /usr/src/app
+  # app:
+  #   container_name: docker-node-mongo
+  #   restart: always
+  #   build: .
+  #   ports:
+  #     - "80:3000"
+  #   volumes:
+  #     - type: bind
+  #       source: ./
+  #       target: /usr/src/app
 
-  mongo:
-    container_name: mongo
-    image: mongo
+  db:
+    container_name: screencapdic_postgres_backend
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: cclee
+      POSTGRES_PASSWORD: cclee
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_DB: screencapdb
+    volumes:
+      - ./postgres_data:/var/lib/postgresql
     ports:
-      - "27017:27017"
+      - "3030:5432"
